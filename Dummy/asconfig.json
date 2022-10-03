@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "source-path": ["/"],
+    "output": "bin/Map.swf"
+  },
+  "mainClass": "Flow",
+  "animateOptions": {
+    "file": "Map.fla"
+  }
+}
