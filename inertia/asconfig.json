@@ -1,10 +1,10 @@
 {
   "compilerOptions": {
     "source-path": ["/"],
-    "output": "bin/Map.swf"
+    "output": "Inertia.swf"
   },
   "mainClass": "Flow",
   "animateOptions": {
-    "file": "Map.fla"
+    "file": "Inertia.fla"
   }
 }

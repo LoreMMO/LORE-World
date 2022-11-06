@@ -1,9 +1,16 @@
 ﻿package {
-	import flash.display.*;
-	import flash.display.MovieClip;
-	import flash.events.*;
-	import flash.utils.*;
-	import flash.media.*;
+    import flash.events.*;
+    import flash.display.*;
+    import flash.utils.*;
+    import flash.accessibility.*;
+    import flash.errors.*;
+    import flash.filters.*;
+    import flash.geom.*;
+    import flash.media.*;
+    import flash.net.*;
+    import flash.system.*;
+    import flash.text.*;
+    import flash.ui.*;
 
 	public dynamic class Flow extends MovieClip {
 		public var rootClass: MovieClip;
@@ -18,29 +25,24 @@
 			);
 		}
 
-		public function frameWait() {
+		public function frameWait(): void {
 			addEventListener(Event.ADDED_TO_STAGE, onAdd, false, 0, true);
-			// addEventListener(Event.REMOVED_FROM_STAGE, onRem, false, 0, true);
 			stop();
 		}
 
-		public function frameBlank() {
-			trace("scope: " + MovieClip(parent).name);
-			trace("var:   " + MovieClip(parent).strFrame);
+		public function frameBlank(): void {
+			trace("scope : " + MovieClip(parent).name);
+			trace("var   : " + MovieClip(parent).strFrame);
 			gotoAndPlay(MovieClip(parent).strFrame);
 			stop();
 		}
 
-		public function frameDefault() {
+		public function frameDefault(): void {
 			stop();
 		}
 
 		public function onAdd(event: Event): void {
 			rootClass = MovieClip(stage.getChildAt(0));
-		}
-
-		public function onRem(event: Event): void {
-			SoundMixer.stopAll();
 		}
 
 	}
