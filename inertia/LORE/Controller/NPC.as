@@ -2,77 +2,67 @@ package LORE.Controller {
 	import flash.display.*;
     import flash.events.*;
     import flash.utils.*;
-    import flash.display.MovieClip;
 	
 	public dynamic class NPC extends MovieClip {
         private var r: MovieClip;
         public var npcDisplay: DisplayObject;
         public var btnButton: SimpleButton;
 		private var avtMC: selAvatarMC;
-        private var obj: Object;
+        // private var obj: Object;
         public var apopObj: Object;
         public var daeTEST:* ;
+        public var displayAvts: Array;
 		
 		public function NPC() {
+            // displayAvts = new Array();
             r = MovieClip(stage.getChildAt(0));
-            obj = r.world.map.NPCS[this.name].Dialogue;
+            // var objData: Object = r.world.map.NPCS[this.name].Dialogue;
+            // displayAvts.push({data: objData});
+            // trace("T1 = " + displayAvts[(displayAvts.length - 1)].data);
+            // trace("T2 = " + displayAvts.data);
+            // setChildIndex(daeTEST, 0);
+            // btnButton.y = daeTEST.y - 165;
+            // btnButton.x = btnButton.x;
+            // btnButton.addEventListener(MouseEvent.MOUSE_DOWN, onClick, false, 0, true);
+            
+            var char: String;
+            var tgt: Object;
+            // tgt = r.world.map.NPCS[this.name].Dialogue as Object;
 
-            // avatarMC = new selAvatarMC(r);
-            // createNPC(avatarMC, objData);
-            // avatarMC.scaleX = (avatarMC.scaleX * 1);
-            // avatarMC.scaleY = (avatarMC.scaleY * 1);
-            // addEventListener(MouseEvent.MOUSE_DOWN, onClick);
+            // if (displayAvts.length != 0) {
+            //     displayAvts.splice(0);
+            // };
+            tgt = r.world.map.NPCS[this.name].Dialogue;
+            trace("Gender 1 = " + tgt.strGender);
+            displayAvts = new Array();
+            displayAvts.push({data: tgt});
+            // displayAvts.push(tgt);
+            // trace("displayAvts = " + displayAvts);
+            trace("Gender 2 = " + displayAvts[0].data.strGender);
 
-            // daeTEST = createNPC(avatarMC, objData);
-            daeTEST = createNPC();
-            setChildIndex(daeTEST, 0);
-            btnButton.y = daeTEST.y - 165;
-            btnButton.x = btnButton.x;
-            // btnButton.y = daeTEST.y - 10;
-            // btnButton.addEventListener(MouseEvent.MOUSE_DOWN, onClick);
-            btnButton.addEventListener(MouseEvent.MOUSE_DOWN, onClick, false, 0, true);
+            // for (char in r.world.map.NPCS) {
+            //     tgt = (r.world.map.NPCS[char] as Object);
+            //     displayAvts.push({
+            //         data: tgt.data
+            //     });
+            //     trace(displayAvts[(displayAvts.length - 1)].data.Dialogue.Name);
+            // };
+
+            daeTEST = createNPC(displayAvts[0].data);
 		}
 
-        // public function createNPC(mc: selAvatarMC): selAvatarMC {
-        //     addChild(mc);
-        //     mc.gotoAndPlay("hold");
-        //     mc.name = ("previewMC" + Math.random());
-        //     mc.strGender = obj.strGender;
-        //     mc.pAV.pMC = mc;
-        //     mc.pAV.objData = obj;
-
-        //     if (obj.strWeaponFile == "None") {
-        //         mc.mcChar.weapon.visible = false;
-        //         mc.mcChar.weaponOff.visible = false;
-        //     } else {
-        //         mc.loadWeapon();
-        //     };
-
-        //     if (obj.strArmorFile != "None") {
-        //         mc.loadArmor(obj.strArmorFile, obj.strArmorLink);
-        //     };
-
-        //     mc.scaleX = (mc.scaleX * 1);
-        //     mc.scaleY = (mc.scaleY * 1);
-
-        //     npcDisplay = mc;
-        //     return mc;
-        // }
-
-        // public function createNPC(avtMC: selAvatarMC, obj: Object): selAvatarMC {
-        public function createNPC(): selAvatarMC {
+        public function createNPC(obj: Object): selAvatarMC {
             avtMC = new selAvatarMC(r);
             addChild(avtMC);
             avtMC.gotoAndPlay("hold");
+            // avtMC.name = this.name + "_NPC";
             // avtMC.name = ("previewMC" + Math.random());
-            avtMC.name = this.name + "_NPC";
+            avtMC.name = (this.name + "_NPC" + Math.random());
             avtMC.strGender = obj.strGender;
+            trace("intColorSkin = " + obj.intColorSkin);
 
-            // avtMC.pAV.isMyAvatar = false;
             avtMC.pAV.pMC = avtMC;
             avtMC.pAV.objData = obj;
-            // avtMC.pAV.dataLeaf.showCloak = true;
-            // avtMC.pAV.dataLeaf.showHelm = !((obj.strHelmFile == "None"));
 
             if (obj.strWeaponFile == "None") {
                 avtMC.mcChar.weapon.visible = false;
@@ -100,51 +90,16 @@ package LORE.Controller {
                 avtMC.loadArmor(obj.strArmorFile, obj.strArmorLink);
             };
 
+
             return (avtMC);
         }
-
-        // public function createNPC(): void {
-        //     avatarMC = new selAvatarMC(r);
-        //     avatarMC.gotoAndPlay("hold");
-        //     avatarMC.name = ("previewMC" + Math.random());
-        //     avatarMC.strGender = obj.strGender;
-        //     avatarMC.pAV.pMC = avatarMC;
-        //     avatarMC.pAV.objData = obj;
-
-        //     if (obj.strWeaponFile == "None") {
-        //         avatarMC.mcChar.weapon.visible = false;
-        //         avatarMC.mcChar.weaponOff.visible = false;
-        //     } else {
-        //         avatarMC.loadWeapon();
-        //     };
-
-        //     if (obj.strArmorFile != "None") {
-        //         avatarMC.loadArmor(obj.strArmorFile, obj.strArmorLink);
-        //     };
-
-        //     avatarMC.scaleX = (avatarMC.scaleX * 1);
-        //     avatarMC.scaleY = (avatarMC.scaleY * 1);
-
-        //     addChild(avatarMC);
-
-        //     btnButton.y = avatarMC.y - 75;
-        //     addEventListener(MouseEvent.MOUSE_DOWN, onClick);
-        // }
 
         public function onClick(event: MouseEvent): void {
             r.mixer.playSound("Good");
             r.world.map.targetNPC = this.name;
-            // r.world.map.daeNPC = createNPC(avatarMC, objData);
             // r.world.map.daeNPC = createNPC();
-            r.world.map.daeNPC = daeTEST;
-            // r.world.openApop({
-            //     npcLinkage: this.name + "_NPC",
-            //     cnt: "LORE.Controller.ApopController",
-            //     npcEntry: "left",
-            //     scene: "none"
-            // });
+            r.world.map.daeNPC = createNPC(displayAvts.data);
             apopObj = "LORE.Controller.ApopController";
-            r.menuClose();
             r.world.attachMovieFront(apopObj);
         }
 

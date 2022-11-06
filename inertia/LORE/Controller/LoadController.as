@@ -37,6 +37,7 @@ package LORE.Controller {
 
         public function getLoadPath(path: String): String {
 			// var f: String = r.serverGate + r.generateRandomString(5) + r.gate.reinstate(path);
+            // var f: String = "https://game.aq.com/game/gamefiles/" + path + "?rand=" + Math.random();
             var f: String = "https://game.aq.com/game/gamefiles/" + path;
 			trace("[LOAD] Data >", f);
 			trace("[LOAD] File >", path);

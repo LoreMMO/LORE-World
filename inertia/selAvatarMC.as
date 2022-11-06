@@ -108,57 +108,101 @@ package {
 			});
 		}
 
-		public function setColor(param1: MovieClip, param2: String, param3: String): void {
-			var _loc_4: * = Number(pAV.objData["intColor" + param2]);
-			param1.isColored = true;
-			param1.intColor = _loc_4;
-			param1.strLocation = param2;
-			param1.strShade = param3;
-			changeColor(param1, _loc_4, param3);
+		// public function setColor(param1: MovieClip, param2: String, param3: String): void {
+		// 	var _loc_4: * = Number(pAV.objData["intColor" + param2]);
+		// 	param1.isColored = true;
+		// 	param1.intColor = _loc_4;
+		// 	param1.strLocation = param2;
+		// 	param1.strShade = param3;
+		// 	changeColor(param1, _loc_4, param3);
+		// }
+
+		public function setColor(mc:MovieClip, typ:String, strLocation:String, strShade:String):void
+        {
+            var intColor:Number = Number(pAV.objData[("intColor" + strLocation)]);
+			trace("intColor = " + intColor);
+			trace("strLocation = " + strLocation);
+			trace("test = " + pAV.objData[("intColor" + strLocation)]);
+            mc.isColored = true;
+            mc.intColor = intColor;
+            mc.strLocation = strLocation;
+            mc.strShade = strShade;
+            changeColor(mc, intColor, strShade);
+        }
+
+		public function changeColor(mc: MovieClip, intColor: Number, strShade: String, op: String = ""): void {
+			var newCT: ColorTransform = new ColorTransform();
+			if (op == "") {
+				newCT.color = intColor;
+			};
+			switch (strShade.toUpperCase()) {
+				case "LIGHT":
+					newCT.redOffset = (newCT.redOffset + 100);
+					newCT.greenOffset = (newCT.greenOffset + 100);
+					newCT.blueOffset = (newCT.blueOffset + 100);
+					break;
+				case "DARK":
+					newCT.redOffset = (newCT.redOffset - ((mc.strLocation == "Skin") ? 25 : 50));
+					newCT.greenOffset = (newCT.greenOffset - 50);
+					newCT.blueOffset = (newCT.blueOffset - 50);
+					break;
+				case "DARKER":
+					newCT.redOffset = (newCT.redOffset - 125);
+					newCT.greenOffset = (newCT.greenOffset - 125);
+					newCT.blueOffset = (newCT.blueOffset - 125);
+					break;
+			};
+			if (op == "-") {
+				newCT.redOffset = (newCT.redOffset * -1);
+				newCT.greenOffset = (newCT.greenOffset * -1);
+				newCT.blueOffset = (newCT.blueOffset * -1);
+			};
+			if (((op == "") || (!(mc.transform.colorTransform.redOffset == newCT.redOffset)))) {
+				mc.transform.colorTransform = newCT;
+			};
 		}
 
-		public function changeColor(param1: MovieClip, param2: Number, param3: String, param4: String = ""): void {
-			var _loc_5: * = new ColorTransform();
-			if (param4 == "") {
-				_loc_5.color = param2;
-			}
-			switch (param3.toUpperCase()) {
-				case "LIGHT":
-					{
-						_loc_5.redOffset = _loc_5.redOffset + 100;
-						_loc_5.greenOffset = _loc_5.greenOffset + 100;
-						_loc_5.blueOffset = _loc_5.blueOffset + 100;
-						break;
-					}
-				case "DARK":
-					{
-						_loc_5.redOffset = _loc_5.redOffset - (param1.strLocation == "Skin" ? (25) : (50));
-						_loc_5.greenOffset = _loc_5.greenOffset - 50;
-						_loc_5.blueOffset = _loc_5.blueOffset - 50;
-						break;
-					}
-				case "DARKER":
-					{
-						_loc_5.redOffset = _loc_5.redOffset - 125;
-						_loc_5.greenOffset = _loc_5.greenOffset - 125;
-						_loc_5.blueOffset = _loc_5.blueOffset - 125;
-						break;
-					}
-				default:
-					{
-						break;
-					}
-			}
-			if (param4 == "-") {
-				_loc_5.redOffset = _loc_5.redOffset * -1;
-				_loc_5.greenOffset = _loc_5.greenOffset * -1;
-				_loc_5.blueOffset = _loc_5.blueOffset * -1;
-			}
-			if (param4 == "" || param1.transform.colorTransform.redOffset != _loc_5.redOffset) {
-				param1.transform.colorTransform = _loc_5;
-			}
-			return;
-		} // end function
+		// public function changeColor(param1: MovieClip, param2: Number, param3: String, param4: String = ""): void {
+		// 	var _loc_5: * = new ColorTransform();
+		// 	if (param4 == "") {
+		// 		_loc_5.color = param2;
+		// 	}
+		// 	switch (param3.toUpperCase()) {
+		// 		case "LIGHT":
+		// 			{
+		// 				_loc_5.redOffset = _loc_5.redOffset + 100;
+		// 				_loc_5.greenOffset = _loc_5.greenOffset + 100;
+		// 				_loc_5.blueOffset = _loc_5.blueOffset + 100;
+		// 				break;
+		// 			}
+		// 		case "DARK":
+		// 			{
+		// 				_loc_5.redOffset = _loc_5.redOffset - (param1.strLocation == "Skin" ? (25) : (50));
+		// 				_loc_5.greenOffset = _loc_5.greenOffset - 50;
+		// 				_loc_5.blueOffset = _loc_5.blueOffset - 50;
+		// 				break;
+		// 			}
+		// 		case "DARKER":
+		// 			{
+		// 				_loc_5.redOffset = _loc_5.redOffset - 125;
+		// 				_loc_5.greenOffset = _loc_5.greenOffset - 125;
+		// 				_loc_5.blueOffset = _loc_5.blueOffset - 125;
+		// 				break;
+		// 			}
+		// 		default:
+		// 			{
+		// 				break;
+		// 			}
+		// 	}
+		// 	if (param4 == "-") {
+		// 		_loc_5.redOffset = _loc_5.redOffset * -1;
+		// 		_loc_5.greenOffset = _loc_5.greenOffset * -1;
+		// 		_loc_5.blueOffset = _loc_5.blueOffset * -1;
+		// 	}
+		// 	if (param4 == "" || param1.transform.colorTransform.redOffset != _loc_5.redOffset) {
+		// 		param1.transform.colorTransform = _loc_5;
+		// 	}
+		// }
 
 		public function loadMisc(): void {
 			this.game.LoadMaster(this.onLoadMiscComplete, this.loreC, "items/grounds/" + this.pAV.objData.eqp["mi"].sFile, null, ioErrorHandler, false);
