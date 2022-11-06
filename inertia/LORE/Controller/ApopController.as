@@ -49,6 +49,7 @@ package LORE.Controller {
 					r.ui.mcPopup.onClose();
                     r.world.removeMovieFront();
 					// MovieClip(mcCharSelect.parent).removeChild(mcCharSelect);
+                    // r.world.FG.removeChildAt(0);
 					break;
             }
         }

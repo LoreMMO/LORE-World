@@ -120,9 +120,6 @@ package {
 		public function setColor(mc:MovieClip, typ:String, strLocation:String, strShade:String):void
         {
             var intColor:Number = Number(pAV.objData[("intColor" + strLocation)]);
-			trace("intColor = " + intColor);
-			trace("strLocation = " + strLocation);
-			trace("test = " + pAV.objData[("intColor" + strLocation)]);
             mc.isColored = true;
             mc.intColor = intColor;
             mc.strLocation = strLocation;

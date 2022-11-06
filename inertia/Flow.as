@@ -13,12 +13,12 @@
 					Subtitle: "Losers",
 					Context: "test",
 					strGender: "F",
-					intColorHair: "0x5e4f37",
-					intColorSkin: "0xeacd8a",
-					intColorEye: "0x1649e",
-					intColorBase: "0x000000",
-					intColorTrim: "0x000000",
-					intColorAccessory: "0x000000",
+					intColorHair: "0x" + "FFFFCC",
+					intColorSkin: "0x" + "FFCCCC",
+					intColorEye: "0x" + "FFFFFF",
+					intColorBase: "0x" + "000000",
+					intColorTrim: "0x" + "000000",
+					intColorAccessory: "0x" + "000000",
 
 					strHelmFile: "items/helms/EdenHighFormalsHair.swf",
 					strHelmLink: "EdenHighFormalsHair",
@@ -30,8 +30,8 @@
 					strCapeFile: "items/capes/BurningloveNationL.swf",
 					strCapeLink: "BurningloveNationL",
 					
-					strArmorFile: "pirate2_skin.swf",
-					strArmorLink: "Pirate2",
+					strArmorFile: "LegionElectroMageNonCC" + ".swf",
+					strArmorLink: "LegionElectroMageNonCC",
 
 					Buttons: [{
 						Name: "Starter Shop", 

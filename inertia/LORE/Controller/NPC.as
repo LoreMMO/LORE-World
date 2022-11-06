@@ -2,58 +2,54 @@ package LORE.Controller {
 	import flash.display.*;
     import flash.events.*;
     import flash.utils.*;
+    import flash.display.MovieClip;
 	
 	public dynamic class NPC extends MovieClip {
         private var r: MovieClip;
         public var npcDisplay: DisplayObject;
         public var btnButton: SimpleButton;
 		private var avtMC: selAvatarMC;
-        // private var obj: Object;
+        private var obj: Object;
         public var apopObj: Object;
         public var daeTEST:* ;
-        public var displayAvts: Array;
-		
+        private var displayAvts: Array;
+        public var okayDAE: DisplayObject;
+
 		public function NPC() {
-            // displayAvts = new Array();
             r = MovieClip(stage.getChildAt(0));
-            // var objData: Object = r.world.map.NPCS[this.name].Dialogue;
-            // displayAvts.push({data: objData});
-            // trace("T1 = " + displayAvts[(displayAvts.length - 1)].data);
-            // trace("T2 = " + displayAvts.data);
-            // setChildIndex(daeTEST, 0);
-            // btnButton.y = daeTEST.y - 165;
-            // btnButton.x = btnButton.x;
-            // btnButton.addEventListener(MouseEvent.MOUSE_DOWN, onClick, false, 0, true);
-            
-            var char: String;
             var tgt: Object;
-            // tgt = r.world.map.NPCS[this.name].Dialogue as Object;
-
-            // if (displayAvts.length != 0) {
-            //     displayAvts.splice(0);
-            // };
             tgt = r.world.map.NPCS[this.name].Dialogue;
-            trace("Gender 1 = " + tgt.strGender);
             displayAvts = new Array();
-            displayAvts.push({data: tgt});
-            // displayAvts.push(tgt);
-            // trace("displayAvts = " + displayAvts);
-            trace("Gender 2 = " + displayAvts[0].data.strGender);
+            displayAvts.push({
+                data: tgt,
+                mc: null
+            });
+            // daeTEST = createCharacterMC(displayAvts[0].data);
+            okayDAE = createCharacterMC(displayAvts[0].data);
+            displayAvts[0]["mc"] = okayDAE;
+            addChild(displayAvts[0]["mc"]);
 
-            // for (char in r.world.map.NPCS) {
-            //     tgt = (r.world.map.NPCS[char] as Object);
-            //     displayAvts.push({
-            //         data: tgt.data
-            //     });
-            //     trace(displayAvts[(displayAvts.length - 1)].data.Dialogue.Name);
-            // };
-
-            daeTEST = createNPC(displayAvts[0].data);
+            btnButton.y = displayAvts[0]["mc"] - 165;
+            btnButton.x = btnButton.x;
+            btnButton.addEventListener(MouseEvent.MOUSE_DOWN, onClick, false, 0, true);
 		}
 
-        public function createNPC(obj: Object): selAvatarMC {
+        // public function NPC() {
+        //     r = MovieClip(stage.getChildAt(0));
+        //     obj = r.world.map.NPCS[this.name].Dialogue;
+        //     // daeTEST = createNPC();
+        //     // setChildIndex(daeTEST, 0);
+
+        //     CHARS = new MovieClip();
+
+        //     btnButton.y = daeTEST.y - 165;
+        //     btnButton.x = btnButton.x;
+        //     btnButton.addEventListener(MouseEvent.MOUSE_DOWN, onClick, false, 0, true);
+		// }
+
+        public function createCharacterMC(obj: Object): selAvatarMC {
             avtMC = new selAvatarMC(r);
-            addChild(avtMC);
+            // addChild(avtMC);
             avtMC.gotoAndPlay("hold");
             // avtMC.name = this.name + "_NPC";
             // avtMC.name = ("previewMC" + Math.random());
@@ -90,6 +86,45 @@ package LORE.Controller {
                 avtMC.loadArmor(obj.strArmorFile, obj.strArmorLink);
             };
 
+            return (avtMC);
+        }
+
+        public function createNPC(): selAvatarMC {
+            avtMC = new selAvatarMC(r);
+            avtMC.gotoAndPlay("hold");
+            avtMC.name = this.name + "_NPC";
+            avtMC.strGender = obj.strGender;
+
+            avtMC.pAV.pMC = avtMC;
+            avtMC.pAV.objData = obj;
+
+            if (obj.strWeaponFile == "None") {
+                avtMC.mcChar.weapon.visible = false;
+                avtMC.mcChar.weaponOff.visible = false;
+            } else {
+                avtMC.loadWeapon();
+            };
+            if (obj.strWeaponType == "Dagger") {
+                avtMC.loadWeaponOff();
+            } else {
+                avtMC.mcChar.weaponOff.visible = false;
+            };
+            if ((((obj.strHelmFile == "None")) || (((obj.hasOwnProperty("showHelm")) && (!(obj.showHelm)))))) {
+                avtMC.mcChar.head.helm.visible = false;
+                avtMC.mcChar.head.hair.visible = true;
+            } else {
+                avtMC.loadHelm();
+            };
+            if (obj.strCapeFile == "None") {
+                avtMC.mcChar.cape.visible = false;
+            } else {
+                avtMC.loadCape();
+            };
+            if (obj.strArmorFile != "None") {
+                avtMC.loadArmor(obj.strArmorFile, obj.strArmorLink);
+            };
+
+            // addChild(avtMC);
 
             return (avtMC);
         }
@@ -97,9 +132,9 @@ package LORE.Controller {
         public function onClick(event: MouseEvent): void {
             r.mixer.playSound("Good");
             r.world.map.targetNPC = this.name;
-            // r.world.map.daeNPC = createNPC();
-            r.world.map.daeNPC = createNPC(displayAvts.data);
+            r.world.map.daeNPC = displayAvts[0]["mc"];
             apopObj = "LORE.Controller.ApopController";
+            r.menuClose();
             r.world.attachMovieFront(apopObj);
         }
 
